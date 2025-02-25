@@ -83,7 +83,7 @@ fun WearApp() {
                 /* *************************** Part 3: ScalingLazyColumn *************************** */
                 // TODO: Swap a TransformingLazyColumn (Wear's version of LazyColumn)
                 /*
-                 * ScalingLazyColumn applies padding for elements in the list to
+                 * TransformingLazyColumn applies padding for elements in the list to
                  * make sure no elements are clipped on different screen sizes.
                  * */
                 TransformingLazyColumn(
@@ -95,8 +95,8 @@ fun WearApp() {
                     item { CardExample() }
 
                     /* ********************* Part 2: Wear unique composables ********************* */
-                    item { ButtonWithTextExample() }
-                    item { SwitchButtonExample() }
+                    item { ChipExample() }
+                    item { SwitchChipExample() }
                 }
 
                 // TODO (End): Create a ScreenScaffold (Wear Version)

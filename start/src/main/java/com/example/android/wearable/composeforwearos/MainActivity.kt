@@ -19,20 +19,19 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.wear.compose.foundation.lazy.TransformingLazyColumn
 import androidx.wear.compose.material.Scaffold
 import androidx.wear.compose.material3.AppScaffold
 import androidx.wear.compose.material3.ScreenScaffold
 import androidx.wear.compose.ui.tooling.preview.WearPreviewDevices
 import com.example.android.wearable.composeforwearos.theme.WearAppTheme
-import com.google.android.horologist.annotations.ExperimentalHorologistApi
-import com.google.android.horologist.compose.layout.AppScaffold
-import com.google.android.horologist.compose.layout.ScreenScaffold
 
 /**
  * This code lab is meant to help existing Compose developers get up to speed quickly on
@@ -59,7 +58,6 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@OptIn(ExperimentalHorologistApi::class)
 @Composable
 fun WearApp() {
     WearAppTheme {
@@ -76,6 +74,12 @@ fun WearApp() {
         // TODO: Swap a TransformingLazyColumn (Wear's version of LazyColumn)
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
+            contentPadding = PaddingValues(
+                top = 32.dp,
+                start = 8.dp,
+                end = 8.dp,
+                bottom = 32.dp,
+            ),
             verticalArrangement = Arrangement.Center,
             state = listState,
         ) {
@@ -88,8 +92,8 @@ fun WearApp() {
             item { CardExample() }
 
             /* ********************* Part 2: Wear unique composables ********************* */
-            item { ButtonWithTextExample() }
-            item { SwitchButtonExample() }
+            item { ChipExample() }
+            item { SwitchChipExample() }
         }
 
         // TODO (End): Create a ScreenScaffold (Wear Version)

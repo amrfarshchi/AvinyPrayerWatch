@@ -54,9 +54,7 @@ import com.google.android.horologist.compose.layout.rememberResponsiveColumnPadd
 @Composable
 fun IconButtonExample(
     modifier: Modifier = Modifier,
-    iconModifier: Modifier = Modifier,
 ) {
-    // Button
     FilledIconButton(
         onClick = { /* ... */ },
         modifier = modifier,
@@ -105,9 +103,9 @@ fun CardExample(
     }
 }
 
-// TODO: Create a Button with text Composable
+// TODO: Create a Chip Composable
 @Composable
-fun ButtonWithTextExample(
+fun ChipExample(
     modifier: Modifier = Modifier,
 ) {
     Button(
@@ -128,9 +126,9 @@ fun ButtonWithTextExample(
     }
 }
 
-// TODO: Create a Button with a switch Composable
+// TODO: Create a Switch Chip Composable
 @Composable
-fun SwitchButtonExample(modifier: Modifier = Modifier) {
+fun SwitchChipExample(modifier: Modifier = Modifier) {
     var checked by remember { mutableStateOf(true) }
     SwitchButton(
         modifier = modifier.fillMaxWidth(),
@@ -255,10 +253,10 @@ fun CardExamplePreview() {
     }
 }
 
-// Button with Text Preview
+// Chip Preview
 @WearPreviewDevices
 @Composable
-fun ButtonWithTextPreview() {
+fun ChipPreview() {
     WearAppTheme {
         AppScaffold {
             val listState = rememberTransformingLazyColumnState()
@@ -270,7 +268,7 @@ fun ButtonWithTextPreview() {
             ) {
                 TransformingLazyColumn(state = listState) {
                     item {
-                        ButtonWithTextExample()
+                        ChipExample()
                     }
                 }
             }
@@ -278,10 +276,10 @@ fun ButtonWithTextPreview() {
     }
 }
 
-// Toggle Button Preview
+// Switch Chip Preview
 @WearPreviewDevices
 @Composable
-fun ToggleButtonExamplePreview() {
+fun SwitchChipExamplePreview() {
     WearAppTheme {
         AppScaffold {
             val listState = rememberTransformingLazyColumnState()
@@ -293,7 +291,7 @@ fun ToggleButtonExamplePreview() {
             ) {
                 TransformingLazyColumn(state = listState) {
                     item {
-                        SwitchButtonExample()
+                        SwitchChipExample()
                     }
                 }
             }
