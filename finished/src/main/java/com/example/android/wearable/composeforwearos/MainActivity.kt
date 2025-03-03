@@ -79,7 +79,7 @@ fun WearApp() {
                     first = ColumnItemType.IconButton,
                     last = ColumnItemType.Button,
                 ),
-            ) {
+            ) {contentPadding ->
                 /* *************************** Part 3: ScalingLazyColumn *************************** */
                 // TODO: Swap a TransformingLazyColumn (Wear's version of LazyColumn)
                 /*
@@ -88,6 +88,7 @@ fun WearApp() {
                  * */
                 TransformingLazyColumn(
                     state = listState,
+                    contentPadding = contentPadding
                 ) {
                     /* ******************* Part 1: Simple composables ******************* */
                     item { IconButtonExample() }
