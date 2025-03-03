@@ -20,10 +20,14 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import androidx.wear.compose.foundation.lazy.TransformingLazyColumn
 import androidx.wear.compose.foundation.lazy.rememberTransformingLazyColumnState
 import androidx.wear.compose.material3.AppScaffold
+import androidx.wear.compose.material3.EdgeButton
+import androidx.wear.compose.material3.EdgeButtonSize
 import androidx.wear.compose.material3.ScreenScaffold
+import androidx.wear.compose.material3.Text
 import com.example.android.wearable.composeforwearos.theme.WearAppTheme
 import com.google.android.horologist.compose.layout.ColumnItemType
 import com.google.android.horologist.compose.layout.rememberResponsiveColumnPadding
@@ -79,7 +83,17 @@ fun WearApp() {
                     first = ColumnItemType.IconButton,
                     last = ColumnItemType.Button,
                 ),
-            ) {contentPadding ->
+                /* *************************** Part 11: EdgeButton *************************** */
+                // TODO: Add a EdgeButton
+                edgeButton = {
+                    EdgeButton(
+                        onClick = { /* ... */ },
+                        buttonSize = EdgeButtonSize.Large,
+                    ) {
+                        Text(stringResource(R.string.more))
+                    }
+                },
+            ) { contentPadding ->
                 /* *************************** Part 3: ScalingLazyColumn *************************** */
                 // TODO: Swap a TransformingLazyColumn (Wear's version of LazyColumn)
                 /*
@@ -88,7 +102,7 @@ fun WearApp() {
                  * */
                 TransformingLazyColumn(
                     state = listState,
-                    contentPadding = contentPadding
+                    contentPadding = contentPadding,
                 ) {
                     /* ******************* Part 1: Simple composables ******************* */
                     item { IconButtonExample() }

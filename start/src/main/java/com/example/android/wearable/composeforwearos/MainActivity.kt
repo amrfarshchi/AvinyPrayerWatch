@@ -27,7 +27,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.foundation.lazy.TransformingLazyColumn
-import androidx.wear.compose.material.Scaffold
 import androidx.wear.compose.material3.AppScaffold
 import androidx.wear.compose.material3.ScreenScaffold
 import androidx.wear.compose.ui.tooling.preview.WearPreviewDevices
@@ -69,6 +68,9 @@ fun WearApp() {
 
         /* *************************** Part 4: Wear OS Scaffold *************************** */
         // TODO (Start): Create a ScreenScaffold (Wear Version)
+
+        /* *************************** Part 11: EdgeButton *************************** */
+        // TODO: Add a EdgeButton
 
         /* *************************** Part 3: ScalingLazyColumn *************************** */
         // TODO: Swap a TransformingLazyColumn (Wear's version of LazyColumn)

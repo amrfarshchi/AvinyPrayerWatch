@@ -15,4 +15,5 @@
     <string name="app_name">Compose for Wear OS Code Lab</string>
     <string name="hello_world_starter">Hello, Compose World!</string>
     <string name="hello_compose_codelab">Welcome to Compose Codelab!</string>
+    <string name="more">More</string>
 </resources>
