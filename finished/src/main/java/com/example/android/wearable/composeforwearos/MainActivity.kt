@@ -20,14 +20,19 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.stringResource
 import androidx.wear.compose.foundation.lazy.TransformingLazyColumn
+import androidx.wear.compose.foundation.lazy.TransformingLazyColumnItemScope
 import androidx.wear.compose.foundation.lazy.rememberTransformingLazyColumnState
 import androidx.wear.compose.material3.AppScaffold
 import androidx.wear.compose.material3.EdgeButton
 import androidx.wear.compose.material3.EdgeButtonSize
 import androidx.wear.compose.material3.ScreenScaffold
 import androidx.wear.compose.material3.Text
+import androidx.wear.compose.material3.lazy.TransformationSpec
+import androidx.wear.compose.material3.lazy.rememberResponsiveTransformationSpec
 import com.example.android.wearable.composeforwearos.theme.WearAppTheme
 import com.google.android.horologist.compose.layout.ColumnItemType
 import com.google.android.horologist.compose.layout.rememberResponsiveColumnPadding
@@ -68,6 +73,7 @@ fun WearApp() {
          * */
         AppScaffold {
             val listState = rememberTransformingLazyColumnState()
+            val transformationSpec = rememberResponsiveTransformationSpec()
 
             /* *************************** Part 4: Wear OS Scaffold *************************** */
             // TODO (Start): Create a ScreenScaffold (Wear Version)
@@ -77,6 +83,7 @@ fun WearApp() {
              * Use the contentPadding parameter to specify the types of items that appear at the
              * start and end of the list ensures that the appropriate padding is used.
              * */
+
             ScreenScaffold(
                 scrollState = listState,
                 contentPadding = rememberResponsiveColumnPadding(
@@ -94,24 +101,46 @@ fun WearApp() {
                     }
                 },
             ) { contentPadding ->
+
                 /* *************************** Part 3: ScalingLazyColumn *************************** */
                 // TODO: Swap a TransformingLazyColumn (Wear's version of LazyColumn)
                 /*
                  * TransformingLazyColumn applies padding for elements in the list to
                  * make sure no elements are clipped on different screen sizes.
                  * */
+
                 TransformingLazyColumn(
                     state = listState,
                     contentPadding = contentPadding,
                 ) {
                     /* ******************* Part 1: Simple composables ******************* */
-                    item { IconButtonExample() }
-                    item { TextExample() }
-                    item { CardExample() }
+                    item {
+                        IconButtonExample(
+                            Modifier.scrollTransform(this)
+                        )
+                    }
+                    item {
+                        TextExample(
+                            Modifier.scrollTransform(this)
+                        )
+                    }
+                    item {
+                        CardExample(
+                            Modifier.scrollTransform(this)
+                        )
+                    }
 
                     /* ********************* Part 2: Wear unique composables ********************* */
-                    item { ChipExample() }
-                    item { SwitchChipExample() }
+                    item {
+                        ChipExample(
+                            Modifier.scrollTransform(this)
+                        )
+                    }
+                    item {
+                        SwitchChipExample(
+                            Modifier.scrollTransform(this)
+                        )
+                    }
                 }
 
                 // TODO (End): Create a ScreenScaffold (Wear Version)
@@ -120,3 +149,16 @@ fun WearApp() {
         }
     }
 }
+
+@Composable
+fun Modifier.scrollTransform(
+    scope: TransformingLazyColumnItemScope,
+    spec: TransformationSpec = rememberResponsiveTransformationSpec(),
+) =
+    with(scope) {
+        transformedHeight(spec::getTransformedHeight).graphicsLayer {
+            with(spec) {
+                applyContainerTransformation(scrollProgress)
+            }
+        }
+    }
