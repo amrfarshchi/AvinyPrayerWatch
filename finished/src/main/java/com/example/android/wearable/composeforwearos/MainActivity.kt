@@ -18,21 +18,21 @@ package com.example.android.wearable.composeforwearos
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.stringResource
 import androidx.wear.compose.foundation.lazy.TransformingLazyColumn
-import androidx.wear.compose.foundation.lazy.TransformingLazyColumnItemScope
 import androidx.wear.compose.foundation.lazy.rememberTransformingLazyColumnState
 import androidx.wear.compose.material3.AppScaffold
 import androidx.wear.compose.material3.EdgeButton
 import androidx.wear.compose.material3.EdgeButtonSize
 import androidx.wear.compose.material3.ScreenScaffold
+import androidx.wear.compose.material3.SurfaceTransformation
 import androidx.wear.compose.material3.Text
-import androidx.wear.compose.material3.lazy.TransformationSpec
-import androidx.wear.compose.material3.lazy.rememberResponsiveTransformationSpec
+import androidx.wear.compose.material3.lazy.rememberTransformationSpec
+import androidx.wear.compose.material3.lazy.transformedHeight
 import com.example.android.wearable.composeforwearos.theme.WearAppTheme
 import com.google.android.horologist.compose.layout.ColumnItemType
 import com.google.android.horologist.compose.layout.rememberResponsiveColumnPadding
@@ -73,7 +73,7 @@ fun WearApp() {
          * */
         AppScaffold {
             val listState = rememberTransformingLazyColumnState()
-            val transformationSpec = rememberResponsiveTransformationSpec()
+            val transformationSpec = rememberTransformationSpec()
 
             /* *************************** Part 4: Wear OS Scaffold *************************** */
             // TODO (Start): Create a ScreenScaffold (Wear Version)
@@ -95,7 +95,7 @@ fun WearApp() {
                 edgeButton = {
                     EdgeButton(
                         onClick = { /* ... */ },
-                        buttonSize = EdgeButtonSize.Large,
+                        buttonSize = EdgeButtonSize.Medium,
                     ) {
                         Text(stringResource(R.string.more))
                     }
@@ -115,30 +115,36 @@ fun WearApp() {
                 ) {
                     /* ******************* Part 1: Simple composables ******************* */
                     item {
-                        IconButtonExample(
-                            Modifier.scrollTransform(this)
-                        )
+                        IconButtonExample()
                     }
                     item {
                         TextExample(
-                            Modifier.scrollTransform(this)
+                            modifier =
+                            Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+                            transformation = SurfaceTransformation(transformationSpec),
                         )
                     }
                     item {
                         CardExample(
-                            Modifier.scrollTransform(this)
+                            modifier =
+                            Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+                            transformation = SurfaceTransformation(transformationSpec),
                         )
                     }
 
                     /* ********************* Part 2: Wear unique composables ********************* */
                     item {
                         ChipExample(
-                            Modifier.scrollTransform(this)
+                            modifier =
+                            Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+                            transformation = SurfaceTransformation(transformationSpec),
                         )
                     }
                     item {
                         SwitchChipExample(
-                            Modifier.scrollTransform(this)
+                            modifier =
+                            Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+                            transformation = SurfaceTransformation(transformationSpec),
                         )
                     }
                 }
@@ -149,16 +155,3 @@ fun WearApp() {
         }
     }
 }
-
-@Composable
-fun Modifier.scrollTransform(
-    scope: TransformingLazyColumnItemScope,
-    spec: TransformationSpec = rememberResponsiveTransformationSpec(),
-) =
-    with(scope) {
-        transformedHeight(spec::getTransformedHeight).graphicsLayer {
-            with(spec) {
-                applyContainerTransformation(scrollProgress)
-            }
-        }
-    }

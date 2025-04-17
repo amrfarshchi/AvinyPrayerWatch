@@ -17,18 +17,20 @@ package com.example.android.wearable.composeforwearos
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.wear.compose.foundation.lazy.TransformingLazyColumn
 import androidx.wear.compose.foundation.lazy.rememberTransformingLazyColumnState
 import androidx.wear.compose.material3.AppScaffold
-import androidx.wear.compose.material3.MaterialTheme
+import androidx.wear.compose.material3.Button
 import androidx.wear.compose.material3.ScreenScaffold
 import androidx.wear.compose.material3.Text
 import androidx.wear.compose.ui.tooling.preview.WearPreviewDevices
 import com.example.android.wearable.composeforwearos.theme.WearAppTheme
-import com.google.android.horologist.compose.layout.ScalingLazyColumnDefaults
+import com.google.android.horologist.compose.layout.ColumnItemType
 import com.google.android.horologist.compose.layout.rememberResponsiveColumnPadding
 
 /* Contains individual Wear OS demo composables for the code lab. */
@@ -71,7 +73,6 @@ fun StartOnlyTextComposables() {
     Text(
         modifier = Modifier.fillMaxSize(),
         textAlign = TextAlign.Center,
-        color = MaterialTheme.colorScheme.primary,
         text = stringResource(R.string.hello_world_starter),
     )
 }
@@ -84,12 +85,12 @@ fun StartOnlyTextComposablesPreview() {
         AppScaffold {
             val listState = rememberTransformingLazyColumnState()
             val contentPadding =
-                rememberResponsiveColumnPadding(first = ScalingLazyColumnDefaults.ItemType.Text)
+                rememberResponsiveColumnPadding(first = ColumnItemType.BodyText)
             ScreenScaffold(
                 scrollState = listState,
                 contentPadding = contentPadding,
-            ) {
-                TransformingLazyColumn(state = listState) {
+            ) { contentPadding ->
+                TransformingLazyColumn(state = listState, contentPadding = contentPadding) {
                     item {
                         StartOnlyTextComposables()
                     }
@@ -99,20 +100,20 @@ fun StartOnlyTextComposablesPreview() {
     }
 }
 
-// Icon Button Preview
+// Button Preview
 @WearPreviewDevices
 @Composable
-fun IconButtonExamplePreview() {
+fun ButtonExamplePreview() {
     WearAppTheme {
         AppScaffold {
             val listState = rememberTransformingLazyColumnState()
             val contentPadding =
-                rememberResponsiveColumnPadding(first = ScalingLazyColumnDefaults.ItemType.Text)
+                rememberResponsiveColumnPadding(first = ColumnItemType.IconButton)
             ScreenScaffold(
                 scrollState = listState,
                 contentPadding = contentPadding,
-            ) {
-                TransformingLazyColumn(state = listState) {
+            ) { contentPadding ->
+                TransformingLazyColumn(state = listState, contentPadding = contentPadding) {
                     item {
                         IconButtonExample()
                     }
@@ -130,12 +131,12 @@ fun TextExamplePreview() {
         AppScaffold {
             val listState = rememberTransformingLazyColumnState()
             val contentPadding =
-                rememberResponsiveColumnPadding(first = ScalingLazyColumnDefaults.ItemType.Text)
+                rememberResponsiveColumnPadding(first = ColumnItemType.BodyText)
             ScreenScaffold(
                 scrollState = listState,
                 contentPadding = contentPadding,
-            ) {
-                TransformingLazyColumn(state = listState) {
+            ) { contentPadding ->
+                TransformingLazyColumn(state = listState, contentPadding = contentPadding) {
                     item {
                         TextExample()
                     }
@@ -153,12 +154,12 @@ fun CardExamplePreview() {
         AppScaffold {
             val listState = rememberTransformingLazyColumnState()
             val contentPadding =
-                rememberResponsiveColumnPadding(first = ScalingLazyColumnDefaults.ItemType.Text)
+                rememberResponsiveColumnPadding(first = ColumnItemType.Card)
             ScreenScaffold(
                 scrollState = listState,
                 contentPadding = contentPadding,
-            ) {
-                TransformingLazyColumn(state = listState) {
+            ) { contentPadding ->
+                TransformingLazyColumn(state = listState, contentPadding = contentPadding) {
                     item {
                         CardExample()
                     }
@@ -176,12 +177,12 @@ fun ChipPreview() {
         AppScaffold {
             val listState = rememberTransformingLazyColumnState()
             val contentPadding =
-                rememberResponsiveColumnPadding(first = ScalingLazyColumnDefaults.ItemType.Text)
+                rememberResponsiveColumnPadding(first = ColumnItemType.Button)
             ScreenScaffold(
                 scrollState = listState,
                 contentPadding = contentPadding,
-            ) {
-                TransformingLazyColumn(state = listState) {
+            ) { contentPadding ->
+                TransformingLazyColumn(state = listState, contentPadding = contentPadding) {
                     item {
                         ChipExample()
                     }
@@ -199,12 +200,12 @@ fun SwitchChipExamplePreview() {
         AppScaffold {
             val listState = rememberTransformingLazyColumnState()
             val contentPadding =
-                rememberResponsiveColumnPadding(first = ScalingLazyColumnDefaults.ItemType.Text)
+                rememberResponsiveColumnPadding(first = ColumnItemType.Button)
             ScreenScaffold(
                 scrollState = listState,
                 contentPadding = contentPadding,
-            ) {
-                TransformingLazyColumn(state = listState) {
+            ) { contentPadding ->
+                TransformingLazyColumn(state = listState, contentPadding = contentPadding) {
                     item {
                         SwitchChipExample()
                     }

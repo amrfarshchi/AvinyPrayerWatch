@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.wear.compose.foundation.lazy.TransformingLazyColumn
 import androidx.wear.compose.material3.AppScaffold
 import androidx.wear.compose.material3.ScreenScaffold
+import androidx.wear.compose.material3.ScreenScaffoldDefaults.contentPadding
 import androidx.wear.compose.ui.tooling.preview.WearPreviewDevices
 import com.example.android.wearable.composeforwearos.theme.WearAppTheme
 
