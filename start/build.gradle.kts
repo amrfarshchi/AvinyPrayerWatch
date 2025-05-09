@@ -28,7 +28,7 @@ android {
         minSdk = 26
         // Refer to https://developer.android.com/google/play/requirements/target-sdk to learn
         // about latest target sdk
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
     }
@@ -84,9 +84,7 @@ dependencies {
     // Compose preview annotations for Wear OS.
     implementation(libs.androidx.compose.ui.tooling)
 
-    implementation(libs.horologist.composables)
     implementation(libs.horologist.compose.layout)
-    implementation(libs.horologist.compose.material)
 
     coreLibraryDesugaring(libs.desugar.jdk.libs)
 
