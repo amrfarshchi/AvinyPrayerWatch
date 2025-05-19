@@ -13,10 +13,7 @@
 -->
 <resources>
     <string name="app_name">Compose for Wear OS Code Lab</string>
-    <!--
-    This string is used for square devices and overridden by hello_world in
-    values-round/strings.xml for round devices.
-    -->
-    <string name="device_shape">Square Device</string>
     <string name="hello_world_starter">Hello, Compose World!</string>
+    <string name="hello_compose_codelab">Welcome to Compose Codelab!</string>
+    <string name="more">More</string>
 </resources>

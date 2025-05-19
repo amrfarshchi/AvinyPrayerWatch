@@ -16,30 +16,29 @@
 package com.example.android.wearable.composeforwearos
 
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import androidx.wear.compose.material.MaterialTheme
-import androidx.wear.compose.material.Text
+import androidx.wear.compose.foundation.lazy.TransformingLazyColumn
+import androidx.wear.compose.foundation.lazy.rememberTransformingLazyColumnState
+import androidx.wear.compose.material3.AppScaffold
+import androidx.wear.compose.material3.Button
+import androidx.wear.compose.material3.ScreenScaffold
+import androidx.wear.compose.material3.Text
 import androidx.wear.compose.ui.tooling.preview.WearPreviewDevices
 import com.example.android.wearable.composeforwearos.theme.WearAppTheme
+import com.google.android.horologist.compose.layout.ColumnItemType
+import com.google.android.horologist.compose.layout.rememberResponsiveColumnPadding
 
 /* Contains individual Wear OS demo composables for the code lab. */
 
-// TODO: Create a Button Composable (with a Row to center)
+// TODO: Create a Icon Button Composable
 @Composable
-fun ButtonExample(
+fun IconButtonExample(
     modifier: Modifier = Modifier,
-    iconModifier: Modifier = Modifier,
 ) {
 }
 
@@ -60,13 +59,12 @@ fun CardExample(
 @Composable
 fun ChipExample(
     modifier: Modifier = Modifier,
-    iconModifier: Modifier = Modifier,
 ) {
 }
 
-// TODO: Create a ToggleChip Composable
+// TODO: Create a Chip with a switch Composable
 @Composable
-fun ToggleChipExample(modifier: Modifier = Modifier) {
+fun SwitchChipExample(modifier: Modifier = Modifier) {
 }
 
 // Function only used as a demo for when you start the code lab (removed as step 1).
@@ -75,19 +73,30 @@ fun StartOnlyTextComposables() {
     Text(
         modifier = Modifier.fillMaxSize(),
         textAlign = TextAlign.Center,
-        color = MaterialTheme.colors.primary,
         text = stringResource(R.string.hello_world_starter),
     )
 }
-
-/* Previews of Composables. */
 
 // Hello, world starter text preview
 @WearPreviewDevices
 @Composable
 fun StartOnlyTextComposablesPreview() {
     WearAppTheme {
-        StartOnlyTextComposables()
+        AppScaffold {
+            val listState = rememberTransformingLazyColumnState()
+            val contentPadding =
+                rememberResponsiveColumnPadding(first = ColumnItemType.BodyText)
+            ScreenScaffold(
+                scrollState = listState,
+                contentPadding = contentPadding,
+            ) { contentPadding ->
+                TransformingLazyColumn(state = listState, contentPadding = contentPadding) {
+                    item {
+                        StartOnlyTextComposables()
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -96,10 +105,21 @@ fun StartOnlyTextComposablesPreview() {
 @Composable
 fun ButtonExamplePreview() {
     WearAppTheme {
-        ButtonExample(
-            modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
-            iconModifier = Modifier.size(24.dp).wrapContentSize(align = Alignment.Center),
-        )
+        AppScaffold {
+            val listState = rememberTransformingLazyColumnState()
+            val contentPadding =
+                rememberResponsiveColumnPadding(first = ColumnItemType.IconButton)
+            ScreenScaffold(
+                scrollState = listState,
+                contentPadding = contentPadding,
+            ) { contentPadding ->
+                TransformingLazyColumn(state = listState, contentPadding = contentPadding) {
+                    item {
+                        IconButtonExample()
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -108,9 +128,21 @@ fun ButtonExamplePreview() {
 @Composable
 fun TextExamplePreview() {
     WearAppTheme {
-        TextExample(
-            modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
-        )
+        AppScaffold {
+            val listState = rememberTransformingLazyColumnState()
+            val contentPadding =
+                rememberResponsiveColumnPadding(first = ColumnItemType.BodyText)
+            ScreenScaffold(
+                scrollState = listState,
+                contentPadding = contentPadding,
+            ) { contentPadding ->
+                TransformingLazyColumn(state = listState, contentPadding = contentPadding) {
+                    item {
+                        TextExample()
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -119,32 +151,66 @@ fun TextExamplePreview() {
 @Composable
 fun CardExamplePreview() {
     WearAppTheme {
-        CardExample(
-            modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
-            iconModifier = Modifier.size(24.dp).wrapContentSize(align = Alignment.Center),
-        )
+        AppScaffold {
+            val listState = rememberTransformingLazyColumnState()
+            val contentPadding =
+                rememberResponsiveColumnPadding(first = ColumnItemType.Card)
+            ScreenScaffold(
+                scrollState = listState,
+                contentPadding = contentPadding,
+            ) { contentPadding ->
+                TransformingLazyColumn(state = listState, contentPadding = contentPadding) {
+                    item {
+                        CardExample()
+                    }
+                }
+            }
+        }
     }
 }
 
 // Chip Preview
 @WearPreviewDevices
 @Composable
-fun ChipExamplePreview() {
+fun ChipPreview() {
     WearAppTheme {
-        ChipExample(
-            modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
-            iconModifier = Modifier.size(24.dp).wrapContentSize(align = Alignment.Center),
-        )
+        AppScaffold {
+            val listState = rememberTransformingLazyColumnState()
+            val contentPadding =
+                rememberResponsiveColumnPadding(first = ColumnItemType.Button)
+            ScreenScaffold(
+                scrollState = listState,
+                contentPadding = contentPadding,
+            ) { contentPadding ->
+                TransformingLazyColumn(state = listState, contentPadding = contentPadding) {
+                    item {
+                        ChipExample()
+                    }
+                }
+            }
+        }
     }
 }
 
-// Toggle Chip Preview
+// Switch Chip Preview
 @WearPreviewDevices
 @Composable
-fun ToggleChipExamplePreview() {
+fun SwitchChipExamplePreview() {
     WearAppTheme {
-        ToggleChipExample(
-            modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
-        )
+        AppScaffold {
+            val listState = rememberTransformingLazyColumnState()
+            val contentPadding =
+                rememberResponsiveColumnPadding(first = ColumnItemType.Button)
+            ScreenScaffold(
+                scrollState = listState,
+                contentPadding = contentPadding,
+            ) { contentPadding ->
+                TransformingLazyColumn(state = listState, contentPadding = contentPadding) {
+                    item {
+                        SwitchChipExample()
+                    }
+                }
+            }
+        }
     }
 }

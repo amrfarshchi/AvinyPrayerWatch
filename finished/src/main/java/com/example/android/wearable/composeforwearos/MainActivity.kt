@@ -19,24 +19,23 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import androidx.wear.compose.foundation.lazy.ScalingLazyColumn
-import androidx.wear.compose.material.Scaffold
+import androidx.compose.ui.res.stringResource
+import androidx.wear.compose.foundation.lazy.TransformingLazyColumn
+import androidx.wear.compose.foundation.lazy.rememberTransformingLazyColumnState
+import androidx.wear.compose.material3.AppScaffold
+import androidx.wear.compose.material3.EdgeButton
+import androidx.wear.compose.material3.EdgeButtonSize
+import androidx.wear.compose.material3.ScreenScaffold
+import androidx.wear.compose.material3.SurfaceTransformation
+import androidx.wear.compose.material3.Text
+import androidx.wear.compose.material3.lazy.rememberTransformationSpec
+import androidx.wear.compose.material3.lazy.transformedHeight
 import com.example.android.wearable.composeforwearos.theme.WearAppTheme
-import com.google.android.horologist.annotations.ExperimentalHorologistApi
-import com.google.android.horologist.compose.layout.AppScaffold
-import com.google.android.horologist.compose.layout.ScalingLazyColumn
-import com.google.android.horologist.compose.layout.ScalingLazyColumnDefaults
-import com.google.android.horologist.compose.layout.ScalingLazyColumnDefaults.ItemType
-import com.google.android.horologist.compose.layout.ScreenScaffold
-import com.google.android.horologist.compose.layout.rememberResponsiveColumnState
+import com.google.android.horologist.compose.layout.ColumnItemType
+import com.google.android.horologist.compose.layout.rememberResponsiveColumnPadding
 
 /**
  * This code lab is meant to help existing Compose developers get up to speed quickly on
@@ -45,9 +44,9 @@ import com.google.android.horologist.compose.layout.rememberResponsiveColumnStat
  * The code lab walks through a majority of the simple composables for Wear OS (both similar to
  * existing mobile composables and new composables).
  *
- * It also covers more advanced composables like [ScalingLazyColumn] (Wear OS's version of
+ * It also covers more advanced composables like [TransformingLazyColumn] (Wear OS's version of
  * [LazyColumn]) and the Wear OS version of [Scaffold].The codelab explains the advantage of using
- * Horologist [ScalingLazyColumn] and Horologist [AppScaffold] and [ScreenScaffold] to simplify
+ * [TransformingLazyColumn] and  [AppScaffold] and [ScreenScaffold] to simplify
  * code development to align with Wear OS UX guidance.
  *
  * Check out [this link](https://android-developers.googleblog.com/2021/10/compose-for-wear-os-now-in-developer.html)
@@ -63,59 +62,91 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@OptIn(ExperimentalHorologistApi::class)
 @Composable
 fun WearApp() {
     WearAppTheme {
         /* *************************** Part 4: Wear OS Scaffold *************************** */
-        // TODO (Start): Create a AppScaffold (Wear Version)
         /*
-         * [Horologist] AppScaffold adds a TimeText by default that can be override by the
+         * AppScaffold adds a TimeText by default that can be override by the
          * ScreenScaffold. It ensures that TimeText animates correctly when navigating between
          * screens.
          * */
         AppScaffold {
-            // TODO: Swap to ScalingLazyColumnState
-        /*
-         * Specifying the types of items that appear at the start and end of the list ensures that the
-         * appropriate padding is used.
-         */
-            val listState = rememberResponsiveColumnState(
-                contentPadding = ScalingLazyColumnDefaults.padding(
-                    first = ItemType.SingleButton,
-                    last = ItemType.Chip,
-                ),
-            )
-            // Modifiers used by our Wear composables.
-            val contentModifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
-            val iconModifier = Modifier.size(24.dp).wrapContentSize(align = Alignment.Center)
+            val listState = rememberTransformingLazyColumnState()
+            val transformationSpec = rememberTransformationSpec()
 
             /* *************************** Part 4: Wear OS Scaffold *************************** */
             // TODO (Start): Create a ScreenScaffold (Wear Version)
             /*
-             * [Horologist] ScreenScaffold is used in conjunction with AppScaffold and adds a
+             * ScreenScaffold is used in conjunction with AppScaffold and adds a
              * position indicator to the list by default.
+             * Use the contentPadding parameter to specify the types of items that appear at the
+             * start and end of the list ensures that the appropriate padding is used.
              * */
+
             ScreenScaffold(
                 scrollState = listState,
-            ) {
+                contentPadding = rememberResponsiveColumnPadding(
+                    first = ColumnItemType.IconButton,
+                    last = ColumnItemType.Button,
+                ),
+                /* *************************** Part 11: EdgeButton *************************** */
+                // TODO: Add a EdgeButton
+                edgeButton = {
+                    EdgeButton(
+                        onClick = { /* ... */ },
+                        buttonSize = EdgeButtonSize.Medium,
+                    ) {
+                        Text(stringResource(R.string.more))
+                    }
+                },
+            ) { contentPadding ->
+
                 /* *************************** Part 3: ScalingLazyColumn *************************** */
-                // TODO: Swap a ScalingLazyColumn (Wear's version of LazyColumn)
+                // TODO: Swap a TransformingLazyColumn (Wear's version of LazyColumn)
                 /*
-                 * [Horologist] ScalingLazyColumn applies padding for elements in the list to
+                 * TransformingLazyColumn applies padding for elements in the list to
                  * make sure no elements are clipped on different screen sizes.
                  * */
-                ScalingLazyColumn(
-                    columnState = listState,
+
+                TransformingLazyColumn(
+                    state = listState,
+                    contentPadding = contentPadding,
                 ) {
                     /* ******************* Part 1: Simple composables ******************* */
-                    item { ButtonExample(contentModifier, iconModifier) }
-                    item { TextExample(contentModifier) }
-                    item { CardExample(contentModifier, iconModifier) }
+                    item {
+                        IconButtonExample()
+                    }
+                    item {
+                        TextExample(
+                            modifier =
+                            Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+                            transformation = SurfaceTransformation(transformationSpec),
+                        )
+                    }
+                    item {
+                        CardExample(
+                            modifier =
+                            Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+                            transformation = SurfaceTransformation(transformationSpec),
+                        )
+                    }
 
                     /* ********************* Part 2: Wear unique composables ********************* */
-                    item { ChipExample(contentModifier, iconModifier) }
-                    item { ToggleChipExample(contentModifier) }
+                    item {
+                        ChipExample(
+                            modifier =
+                            Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+                            transformation = SurfaceTransformation(transformationSpec),
+                        )
+                    }
+                    item {
+                        SwitchChipExample(
+                            modifier =
+                            Modifier.fillMaxWidth().transformedHeight(this, transformationSpec),
+                            transformation = SurfaceTransformation(transformationSpec),
+                        )
+                    }
                 }
 
                 // TODO (End): Create a ScreenScaffold (Wear Version)
