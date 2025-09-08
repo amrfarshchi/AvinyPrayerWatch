@@ -26,11 +26,12 @@ jobs:
           yes | sdkmanager --licenses
           sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0" "cmdline-tools;latest"
 
-      # اختیاری: Gradle (بدون wrapper)
-      - name: Set up Gradle
+      # Gradle بدون کش
+      - name: Set up Gradle (no cache)
         uses: gradle/actions/setup-gradle@v3
         with:
           gradle-version: 8.7
+          cache-disabled: true
 
       - name: Decode keystore (from secret)
         shell: bash
@@ -41,7 +42,7 @@ jobs:
           echo "$KEYSTORE_BASE64" | base64 -d > app/release-keystore.jks
 
       - name: Build Release
-        run: gradle --no-daemon clean :app:assembleRelease
+        run: gradle --no-daemon --no-build-cache clean :app:assembleRelease
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
