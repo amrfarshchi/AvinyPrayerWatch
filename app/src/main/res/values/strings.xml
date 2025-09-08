@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">اوقات شرعی</string>
+    <string name="select_city">انتخاب شهر</string>
+    <string name="settings">تنظیمات</string>
+    <string name="refresh">به‌روزرسانی</string>
+    <string name="next_prayer">نماز بعدی</string>
+    <string name="loading">در حال بارگذاری…</string>
+    <string name="error">خطا در دریافت اطلاعات</string>
+</resources>
