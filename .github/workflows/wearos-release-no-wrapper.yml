@@ -20,13 +20,20 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
+      # ⬇️ جلوگیری از خطای Broken pipe بعد از قبول لایسنس‌ها
+      - name: Accept Android SDK licenses (ignore SIGPIPE)
+        shell: bash
+        run: |
+          set +e
+          yes | sdkmanager --licenses >/dev/null 2>&1 || true
+          set -e
+
       - name: Install Android SDK packages (API 34)
         shell: bash
         run: |
-          yes | sdkmanager --licenses
-          sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0" "cmdline-tools;latest"
+          sdkmanager --install "platform-tools" "platforms;android-34" "build-tools;34.0.0" "cmdline-tools;latest"
 
-      # ✅ اکشن جدید و بدون کش
+      # ✅ اکشن جدید Gradle بدون کش
       - name: Set up Gradle (no cache)
         uses: gradle/actions/setup-gradle@v3
         with:
@@ -42,7 +49,7 @@ jobs:
           echo "$KEYSTORE_BASE64" | base64 -d > app/release-keystore.jks
 
       - name: Build Release
-        run: gradle --no-daemon --no-build-cache clean :app:assembleRelease
+        run: gradle --no-daemon --no-build-cache --stacktrace clean :app:assembleRelease
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
