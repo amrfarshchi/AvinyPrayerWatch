@@ -19,9 +19,11 @@ android {
         compose = true
         buildConfig = true
     }
+    // با Kotlin 1.9.24 از composeOptions استفاده می‌کنیم:
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.15"
     }
+
     packaging {
         resources {
             excludes += setOf(
@@ -36,6 +38,7 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -44,7 +47,7 @@ android {
 
     signingConfigs {
         create("release") {
-            // در CI با secrets پر می‌شود
+            // در CI با Secrets پر می‌شود
             storeFile = file("release-keystore.jks")
             storePassword = System.getenv("KEYSTORE_PASSWORD")
             keyAlias = System.getenv("KEY_ALIAS")
@@ -54,12 +57,16 @@ android {
             enableV3Signing = true
         }
     }
+
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
             signingConfig = signingConfigs.getByName("release")
+            // در آینده برای بهینه‌سازی:
+            // proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
         getByName("debug") {
+            // برای نصب سریع روی ساعت
             signingConfig = signingConfigs.getByName("release")
         }
     }
@@ -72,9 +79,11 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.6")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.6")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0")
+
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
     implementation("com.squareup.retrofit2:converter-moshi:2.11.0")
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     implementation("com.squareup.moshi:moshi-kotlin:1.15.1")
+
     implementation("androidx.datastore:datastore-preferences:1.1.1")
 }
